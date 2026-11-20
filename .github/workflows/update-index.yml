@@ -1,0 +1,32 @@
+name: Update merged index
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Daily re-merge so new product releases flow in without manual steps.
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Merge source indexes
+        run: python3 tools/merge_index.py
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- index.xml; then
+            echo "index.xml unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.xml
+          git commit -m "Update merged ReaPack index"
+          git push

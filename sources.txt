@@ -1,0 +1,4 @@
+# Source ReaPack indexes merged into this repository's index.xml.
+# One URL per line. Each product's own index stays the source of truth.
+https://github.com/PontakuAudio/SoundPrep/releases/latest/download/index.xml
+https://raw.githubusercontent.com/PontakuAudio/PitchCanvas-Extension-Adaptive-Precision/main/index.xml
